@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/foodOverviewFragment">
+
+    <fragment
+        android:id="@+id/foodOverviewFragment"
+        android:name="be.vives.fridgepal.food_overview.FoodOverviewFragment"
+        android:label="fragment_food_overview"
+        tools:layout="@layout/fragment_food_overview" >
+        <action
+            android:id="@+id/action_foodOverviewFragment_to_foodCreateFragment"
+            app:destination="@id/foodCreateFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/foodCreateFragment"
+        android:name="be.vives.fridgepal.food_create.FoodCreateFragment"
+        android:label="fragment_food_create"
+        tools:layout="@layout/fragment_food_create" >
+        <action
+            android:id="@+id/action_foodCreateFragment_to_foodOverviewFragment"
+            app:destination="@id/foodOverviewFragment" />
+    </fragment>
+</navigation>
