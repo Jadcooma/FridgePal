@@ -11,12 +11,12 @@ data class FoodItem(
         var foodId: Long = 0L,
 
         @ColumnInfo()
-        var name: String = "",
+        var name: String,
 
         @ColumnInfo()
-        var expiryDate: Date = Date(),
+        var expiryDate: Date,
 
         @ColumnInfo()
-        var expiryType: String = "THT",
+        var expiryType: String,
 
         )

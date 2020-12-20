@@ -1,12 +1,9 @@
 package be.vives.fridgepal.food_overview
 
 import android.app.Application
-import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
+import be.vives.fridgepal.convertDateToString
 import be.vives.fridgepal.database.FoodDatabaseDao
 import be.vives.fridgepal.database.FoodItem
 import kotlinx.coroutines.*
@@ -35,12 +32,14 @@ class FoodOverviewViewModel( val database: FoodDatabaseDao,
 
     private fun formatListFood(listFood: List<FoodItem>?) : String {
         val stringBuilder = StringBuilder()
+        var stringDate : String
         if (listFood != null) {
-            listFood.forEach {
-                stringBuilder.appendLine("FoodId: ${it.foodId}")
-                stringBuilder.appendLine("Name: ${it.name}")
-                stringBuilder.appendLine("ExpiryType: ${it.expiryType}")
-                stringBuilder.appendLine("ExpiryDate: ${it.expiryDate}")
+            listFood.forEach { //TODO verwijzen naar localisation strings
+                stringBuilder.appendLine("Id: ${it.foodId}")
+                stringBuilder.appendLine("Naam: ${it.name}")
+                stringBuilder.appendLine("Vervaltype: ${it.expiryType}")
+                stringBuilder.appendLine("Vervaldatum: ${convertDateToString(it.expiryDate)}")
+                stringBuilder.appendLine()
             }
         } else{
             stringBuilder.appendLine("Uw lijstje is leeg")
@@ -58,7 +57,6 @@ class FoodOverviewViewModel( val database: FoodDatabaseDao,
     suspend fun clear(){
         withContext(Dispatchers.IO){
             database.clear()
-            Log.i("FoodOverViewModel", "database.clear() called")
         }
     }
 
