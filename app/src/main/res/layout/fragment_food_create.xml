@@ -51,7 +51,7 @@
             app:layout_constraintTop_toBottomOf="@id/textExpiryType" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName"
+            android:id="@+id/editTextPersonName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="51dp"
@@ -62,10 +62,11 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <RadioGroup
+            android:id="@+id/radioGroupType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="@id/editTextTextPersonName"
+            app:layout_constraintStart_toStartOf="@id/editTextPersonName"
             app:layout_constraintTop_toTopOf="@+id/textExpiryType">
 
             <RadioButton
@@ -102,7 +103,9 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/calendarExpiryDate" />
+            app:layout_constraintTop_toBottomOf="@+id/calendarExpiryDate"
+            android:enabled="@{foodCreateViewModel.addButtonEnabled}"
+            android:onClick="@{() -> foodCreateViewModel.saveFoodItem()}"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

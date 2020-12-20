@@ -19,6 +19,4 @@ data class FoodItem (
         @ColumnInfo()
         var expiryType: String = "THT",
 
-        @ColumnInfo()
-        var searchTerm: String = ""
 )
