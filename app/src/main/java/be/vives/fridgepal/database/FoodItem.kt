@@ -6,9 +6,9 @@ import androidx.room.PrimaryKey
 import java.util.*
 
 @Entity(tableName = "food_item_table")
-data class FoodItem (
+data class FoodItem(
         @PrimaryKey(autoGenerate = true)
-        var foodId : Int = 0,
+        var foodId: Long = 0L,
 
         @ColumnInfo()
         var name: String = "",
@@ -19,4 +19,4 @@ data class FoodItem (
         @ColumnInfo()
         var expiryType: String = "THT",
 
-)
+        )

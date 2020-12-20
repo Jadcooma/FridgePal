@@ -1,16 +1,15 @@
 package be.vives.fridgepal.food_overview
 
 import android.app.Application
+import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import be.vives.fridgepal.database.FoodDatabaseDao
 import be.vives.fridgepal.database.FoodItem
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class FoodOverviewViewModel( val database: FoodDatabaseDao,
                              application: Application) : AndroidViewModel(application) {
@@ -19,6 +18,10 @@ class FoodOverviewViewModel( val database: FoodDatabaseDao,
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     private val _listAllFood = database.getAllFood()
+
+    val clearButtonVisible = Transformations.map(_listAllFood){
+        it?.isNotEmpty()
+    }
 
 /*  TODO : LiveData voor RecyclerView
     private val _listAllFood = MutableLiveData<List<FoodItem>>()
@@ -43,6 +46,20 @@ class FoodOverviewViewModel( val database: FoodDatabaseDao,
             stringBuilder.appendLine("Uw lijstje is leeg")
         }
         return stringBuilder.toString()
+    }
+
+    // clear database
+    fun onClearPressed(){
+        uiScope.launch {
+            clear()
+        }
+    }
+
+    suspend fun clear(){
+        withContext(Dispatchers.IO){
+            database.clear()
+            Log.i("FoodOverViewModel", "database.clear() called")
+        }
     }
 
     // Cancel job bij vernietiging viewModel

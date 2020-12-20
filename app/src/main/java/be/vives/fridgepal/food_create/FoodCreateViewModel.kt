@@ -20,11 +20,9 @@ class FoodCreateViewModel(val database: FoodDatabaseDao,
     val navigateToOverview : LiveData<Boolean>
         get() = _navigateToOverview
 
+    // ingesteld in fragment met viewmodel.setNewFoodItem(foodItem: FoodItem)
     private val newFoodItem = MutableLiveData<FoodItem>()
 
-    var addButtonEnabled = Transformations.map(newFoodItem){
-        null != it
-    }
     fun doneNavigating() {
         _navigateToOverview.value = null;
     }
@@ -39,9 +37,9 @@ class FoodCreateViewModel(val database: FoodDatabaseDao,
         newFoodItem.value = foodItem;
     }
 
-    fun saveFoodItem(foodItem: FoodItem){
+    fun saveFoodItem(){
         uiScope.launch {
-            insert(foodItem);
+            newFoodItem.value?.let { insert(it) };
             _navigateToOverview.value = true
         }
     }
