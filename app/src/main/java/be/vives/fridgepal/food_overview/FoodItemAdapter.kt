@@ -8,19 +8,20 @@ import androidx.recyclerview.widget.RecyclerView
 import be.vives.fridgepal.database.FoodItem
 import be.vives.fridgepal.databinding.ListItemFoodItemBinding
 
-class FoodItemAdapter : ListAdapter<FoodItem, FoodItemAdapter.FoodItemViewHolder>(FoodItemDiffCallback()) {
+class FoodItemAdapter(val clickListener: FoodItemListener) : ListAdapter<FoodItem, FoodItemAdapter.FoodItemViewHolder>(FoodItemDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodItemViewHolder {
         return FoodItemViewHolder.from(parent)
     }
 
     override fun onBindViewHolder(holder: FoodItemViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item)
+        holder.bind(item, clickListener)
     }
 
     class FoodItemViewHolder private constructor(val binding: ListItemFoodItemBinding) : RecyclerView.ViewHolder(binding.root){
-        fun bind(item: FoodItem){
+        fun bind(item: FoodItem, editClickListener: FoodItemListener){
             binding.foodItem = item
+            binding.editClickListener = editClickListener
             binding.executePendingBindings()
         }
 
@@ -42,6 +43,10 @@ class FoodItemAdapter : ListAdapter<FoodItem, FoodItemAdapter.FoodItemViewHolder
             return oldItem == newItem
         }
 
+    }
+
+    class FoodItemListener(val clickListener: (foodId: Long) -> Unit){
+        fun onClick(foodItem : FoodItem) = clickListener(foodItem.foodId)
     }
 
 }

@@ -38,7 +38,11 @@ class FoodOverviewFragment : Fragment() {
             this.findNavController().navigate(R.id.action_foodOverviewFragment_to_foodCreateFragment)
         }
 
-        val adapter = FoodItemAdapter()
+        val foodItemListener = FoodItemAdapter.FoodItemListener{
+            foodId -> foodOverviewViewModel.onFoodEditClicked(foodId)
+        }
+
+        val adapter = FoodItemAdapter(foodItemListener)
         binding.foodList.adapter = adapter
 
         foodOverviewViewModel.listAllFood.observe(viewLifecycleOwner, {

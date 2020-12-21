@@ -2,6 +2,7 @@ package be.vives.fridgepal.food_overview
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import be.vives.fridgepal.database.FoodDatabaseDao
 import kotlinx.coroutines.*
@@ -16,6 +17,19 @@ class FoodOverviewViewModel( val database: FoodDatabaseDao,
 
     val clearButtonVisible = Transformations.map(listAllFood){
         it?.isNotEmpty()
+    }
+
+    private val _navigateToFoodEdit = MutableLiveData<Long>()
+    val navigateToFoodEdit
+        get() = _navigateToFoodEdit
+
+    // navigatie
+    fun onFoodEditClicked(id: Long){
+        _navigateToFoodEdit.value = id
+    }
+
+    fun onFoodEditNavigated(){
+        _navigateToFoodEdit.value = null
     }
 
     // clear database

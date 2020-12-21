@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
             name="foodItem"
             type="be.vives.fridgepal.database.FoodItem" />
+        <variable
+            name="editClickListener"
+            type="be.vives.fridgepal.food_overview.FoodItemAdapter.FoodItemListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,33 +23,55 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="24dp"
+            android:text="@{foodItem.name}"
             app:layout_constraintEnd_toStartOf="@+id/text_expiryType"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:text="@{foodItem.name}"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/text_expiryType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            app:layout_constraintEnd_toStartOf="@+id/text_expiryDate"
-            app:layout_constraintStart_toEndOf="@+id/text_name"
-            app:layout_constraintTop_toTopOf="parent"
-            app:foodExpiryDateString="@{foodItem}"/>
+            android:layout_marginEnd="32dp"
+            app:foodExpiryDateString="@{foodItem}"
+            app:layout_constraintEnd_toEndOf="@id/text_expiryDate"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/text_expiryDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:text="@{foodItem.expiryType}"
+            app:layout_constraintEnd_toStartOf="@+id/buttonEdit"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/buttonEdit"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@android:drawable/ic_menu_edit"
+            android:onClick="@{() -> editClickListener.onClick(foodItem)}"
+            app:layout_constraintBottom_toBottomOf="@id/text_name"
+            app:layout_constraintEnd_toStartOf="@+id/buttonDelete"
+            app:layout_constraintTop_toTopOf="@id/text_name" />
+
+        <Button
+            android:id="@+id/buttonDelete"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:background="@android:drawable/ic_menu_delete"
+            android:onClick="@{() -> editClickListener.onClick(foodItem)}"
+            app:layout_constraintBottom_toBottomOf="@id/text_name"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:text="@{foodItem.expiryType}"/>
+            app:layout_constraintTop_toTopOf="@id/text_name" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
