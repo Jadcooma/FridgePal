@@ -18,5 +18,4 @@ data class FoodItem(
 
         @ColumnInfo()
         var expiryType: String,
-
         )

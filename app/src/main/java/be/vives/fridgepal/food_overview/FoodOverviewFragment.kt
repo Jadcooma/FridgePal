@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import be.vives.fridgepal.R
@@ -36,6 +37,15 @@ class FoodOverviewFragment : Fragment() {
         binding.buttonAddFood.setOnClickListener {
             this.findNavController().navigate(R.id.action_foodOverviewFragment_to_foodCreateFragment)
         }
+
+        val adapter = FoodItemAdapter()
+        binding.foodList.adapter = adapter
+
+        foodOverviewViewModel.listAllFood.observe(viewLifecycleOwner, {
+            it?.let{
+                adapter.submitList(it)
+            }
+        })
 
         return binding.root
     }
