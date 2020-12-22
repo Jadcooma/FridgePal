@@ -10,6 +10,9 @@
         <variable
             name="editClickListener"
             type="be.vives.fridgepal.food_overview.FoodItemAdapter.FoodItemListener" />
+        <variable
+            name="deleteClickListener"
+            type="be.vives.fridgepal.food_overview.FoodItemAdapter.FoodItemListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -68,7 +71,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="8dp"
             android:background="@android:drawable/ic_menu_delete"
-            android:onClick="@{() -> editClickListener.onClick(foodItem)}"
+            android:onClick="@{() -> deleteClickListener.onClick(foodItem)}"
             app:layout_constraintBottom_toBottomOf="@id/text_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/text_name" />

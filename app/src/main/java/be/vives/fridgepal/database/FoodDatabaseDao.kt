@@ -11,11 +11,11 @@ public abstract interface FoodDatabaseDao {
     @Update
     fun update(foodItem: FoodItem)
 
-    @Delete
-    fun delete(foodItem: FoodItem)
+    @Query("DELETE FROM food_item_table WHERE foodId = :key")
+    fun deleteFoodById(key: Long)
 
     @Query("SELECT * from food_item_table WHERE foodId = :key")
-    fun getFoodById(key: Int): FoodItem?
+    fun getFoodById(key: Long): FoodItem?
 
     @Query("SELECT * from food_item_table")
     fun getAllFood(): LiveData<List<FoodItem>>

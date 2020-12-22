@@ -8,19 +8,20 @@ import androidx.recyclerview.widget.RecyclerView
 import be.vives.fridgepal.database.FoodItem
 import be.vives.fridgepal.databinding.ListItemFoodItemBinding
 
-class FoodItemAdapter(val clickListener: FoodItemListener) : ListAdapter<FoodItem, FoodItemAdapter.FoodItemViewHolder>(FoodItemDiffCallback()) {
+class FoodItemAdapter(val editClickListener: FoodItemListener, val deleteClickListener: FoodItemListener) : ListAdapter<FoodItem, FoodItemAdapter.FoodItemViewHolder>(FoodItemDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodItemViewHolder {
         return FoodItemViewHolder.from(parent)
     }
 
     override fun onBindViewHolder(holder: FoodItemViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item, clickListener)
+        holder.bind(item, editClickListener, deleteClickListener)
     }
 
     class FoodItemViewHolder private constructor(val binding: ListItemFoodItemBinding) : RecyclerView.ViewHolder(binding.root){
-        fun bind(item: FoodItem, editClickListener: FoodItemListener){
+        fun bind(item: FoodItem, editClickListener: FoodItemListener, deleteClickListener: FoodItemListener){
             binding.foodItem = item
+            binding.deleteClickListener = deleteClickListener
             binding.editClickListener = editClickListener
             binding.executePendingBindings()
         }

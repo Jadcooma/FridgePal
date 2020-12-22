@@ -19,11 +19,12 @@ class FoodOverviewViewModel( val database: FoodDatabaseDao,
         it?.isNotEmpty()
     }
 
+    //region * navigatie button EDIT *
+
     private val _navigateToFoodEdit = MutableLiveData<Long>()
     val navigateToFoodEdit
         get() = _navigateToFoodEdit
 
-    // navigatie
     fun onFoodEditClicked(id: Long){
         _navigateToFoodEdit.value = id
     }
@@ -31,8 +32,24 @@ class FoodOverviewViewModel( val database: FoodDatabaseDao,
     fun onFoodEditNavigated(){
         _navigateToFoodEdit.value = null
     }
+    //endregion
 
-    // clear database
+    //region * navigatie button DELETE *
+
+    private val _navigateToFoodDelete = MutableLiveData<Long>()
+    val navigateToFoodDelete
+        get() = _navigateToFoodDelete
+
+    fun onFoodDeleteClicked(id: Long){
+        _navigateToFoodDelete.value = id
+    }
+
+    fun onFoodDeleteNavigated(){
+        _navigateToFoodDelete.value = null
+    }
+    //endregion
+
+    //region * CLEAR database *
     fun onClearPressed(){
         uiScope.launch {
             clear()
@@ -44,6 +61,21 @@ class FoodOverviewViewModel( val database: FoodDatabaseDao,
             database.clear()
         }
     }
+    //endregion
+
+    //region * DELETE from database *
+    fun onDeletePressed(id: Long){
+        uiScope.launch {
+            delete(id)
+        }
+    }
+
+    suspend fun delete(id: Long){
+        withContext(Dispatchers.IO){
+            database.deleteFoodById(id)
+        }
+    }
+    //endregion
 
     // Cancel job bij vernietiging viewModel
     override fun onCleared() {

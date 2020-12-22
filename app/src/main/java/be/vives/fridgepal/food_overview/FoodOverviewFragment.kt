@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -17,6 +18,7 @@ class FoodOverviewFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
+        //region * Boilerplate : databinding + viewModel from factory *
         // uitbreiding fragment met databinding: inflate met DataBindingUtil
         val binding : FragmentFoodOverviewBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_food_overview, container, false)
@@ -33,16 +35,30 @@ class FoodOverviewFragment : Fragment() {
 
         binding.foodOverviewViewModel = foodOverviewViewModel
         binding.setLifecycleOwner(this)
+        //endregion
 
         binding.buttonAddFood.setOnClickListener {
             this.findNavController().navigate(R.id.action_foodOverviewFragment_to_foodCreateFragment)
         }
 
-        val foodItemListener = FoodItemAdapter.FoodItemListener{
+        val foodItemEditListener = FoodItemAdapter.FoodItemListener{
             foodId -> foodOverviewViewModel.onFoodEditClicked(foodId)
         }
 
-        val adapter = FoodItemAdapter(foodItemListener)
+        val foodItemDeleteListener = FoodItemAdapter.FoodItemListener{
+                foodId -> foodOverviewViewModel.onFoodDeleteClicked(foodId)
+        }
+
+        //TODO Edit scherm
+        foodOverviewViewModel.navigateToFoodEdit.observe(viewLifecycleOwner, {
+            Toast.makeText(context, "EDIT PAGINA TO DO", Toast.LENGTH_SHORT).show()
+        })
+
+        foodOverviewViewModel.navigateToFoodDelete.observe(viewLifecycleOwner,{
+            foodOverviewViewModel.onDeletePressed(it)
+        })
+
+        val adapter = FoodItemAdapter(foodItemEditListener, foodItemDeleteListener)
         binding.foodList.adapter = adapter
 
         foodOverviewViewModel.listAllFood.observe(viewLifecycleOwner, {
