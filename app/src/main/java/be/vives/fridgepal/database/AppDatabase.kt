@@ -8,22 +8,22 @@ import androidx.room.TypeConverters
 
 @Database(entities = [FoodItem::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class) // voor conversie Long => Date
-abstract class FoodDatabase : RoomDatabase() {
-    abstract val FoodDatabaseDao: FoodDatabaseDao
+abstract class AppDatabase : RoomDatabase() {
+    abstract val FoodDao: FoodDao
 
     companion object  {
 
         @Volatile
-        private var INSTANCE: FoodDatabase? = null
+        private var INSTANCE: AppDatabase? = null
 
-        fun getInstance(context: Context) : FoodDatabase {
+        fun getInstance(context: Context) : AppDatabase {
             synchronized(this) {
                 var instance = INSTANCE
 
                 if (instance == null) {
                     instance = Room.databaseBuilder(
                         context.applicationContext,
-                        FoodDatabase::class.java,
+                        AppDatabase::class.java,
                         "food_history_database"
                     )
                         .fallbackToDestructiveMigration()

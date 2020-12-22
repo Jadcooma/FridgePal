@@ -1,16 +1,16 @@
 package be.vives.fridgepal.food_create
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import be.vives.fridgepal.R
-import be.vives.fridgepal.database.FoodDatabase
+import be.vives.fridgepal.database.AppDatabase
 import be.vives.fridgepal.database.FoodItem
 import be.vives.fridgepal.databinding.FragmentFoodCreateBinding
 import java.util.*
@@ -30,7 +30,7 @@ class FoodCreateFragment : Fragment() {
         val application = requireNotNull(this.activity).application
 
         // DAO meegeven aan ViewModel voor uitvoeren van queries op database
-        val dataSource = FoodDatabase.getInstance(application).FoodDatabaseDao
+        val dataSource = AppDatabase.getInstance(application).FoodDao
 
         val viewModelFactory = FoodCreateViewModelFactory(dataSource, application)
 

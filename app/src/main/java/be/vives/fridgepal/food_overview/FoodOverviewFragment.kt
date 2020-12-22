@@ -1,17 +1,16 @@
 package be.vives.fridgepal.food_overview
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.NavigationUI
 import be.vives.fridgepal.R
-import be.vives.fridgepal.database.FoodDatabase
+import be.vives.fridgepal.database.AppDatabase
 import be.vives.fridgepal.databinding.FragmentFoodOverviewBinding
 
 class FoodOverviewFragment : Fragment() {
@@ -26,7 +25,7 @@ class FoodOverviewFragment : Fragment() {
         val application = requireNotNull(this.activity).application
 
         // DAO meegeven aan ViewModel voor uitvoeren van queries op database
-        val dataSource = FoodDatabase.getInstance(application).FoodDatabaseDao
+        val dataSource = AppDatabase.getInstance(application).FoodDao
 
         val viewModelFactory = FoodOverviewViewModelFactory(dataSource, application)
 
@@ -67,6 +66,18 @@ class FoodOverviewFragment : Fragment() {
             }
         })
 
+        setHasOptionsMenu(true)
         return binding.root
     }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        inflater.inflate(R.menu.menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return NavigationUI.onNavDestinationSelected(item, view!!.findNavController())
+                || super.onOptionsItemSelected(item)
+    }
+
 }

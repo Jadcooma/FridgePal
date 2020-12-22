@@ -21,6 +21,12 @@
         tools:layout="@layout/fragment_food_create" >
         <action
             android:id="@+id/action_foodCreateFragment_to_foodOverviewFragment"
-            app:destination="@id/foodOverviewFragment" />
+            app:destination="@id/foodOverviewFragment"
+            app:popUpTo="@id/foodOverviewFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/recipesFragment"
+        android:name="be.vives.fridgepal.recipes.RecipesFragment"
+        android:label="RecipesFragment"
+        tools:layout="@layout/fragment_recipes"/>
 </navigation>

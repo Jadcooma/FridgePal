@@ -2,13 +2,14 @@ package be.vives.fridgepal.food_overview
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
-import be.vives.fridgepal.database.FoodDatabaseDao
+import be.vives.fridgepal.database.FoodDao
 import kotlinx.coroutines.*
 
-class FoodOverviewViewModel( val database: FoodDatabaseDao,
-                             application: Application) : AndroidViewModel(application) {
+class FoodOverviewViewModel(val database: FoodDao,
+                            application: Application) : AndroidViewModel(application) {
     private var viewModelJob = Job()
 
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
@@ -22,7 +23,7 @@ class FoodOverviewViewModel( val database: FoodDatabaseDao,
     //region * navigatie button EDIT *
 
     private val _navigateToFoodEdit = MutableLiveData<Long>()
-    val navigateToFoodEdit
+    val navigateToFoodEdit : LiveData<Long>
         get() = _navigateToFoodEdit
 
     fun onFoodEditClicked(id: Long){
@@ -37,7 +38,7 @@ class FoodOverviewViewModel( val database: FoodDatabaseDao,
     //region * navigatie button DELETE *
 
     private val _navigateToFoodDelete = MutableLiveData<Long>()
-    val navigateToFoodDelete
+    val navigateToFoodDelete : LiveData<Long>
         get() = _navigateToFoodDelete
 
     fun onFoodDeleteClicked(id: Long){

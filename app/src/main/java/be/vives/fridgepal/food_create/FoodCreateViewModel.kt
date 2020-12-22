@@ -4,11 +4,11 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import be.vives.fridgepal.database.FoodDatabaseDao
+import be.vives.fridgepal.database.FoodDao
 import be.vives.fridgepal.database.FoodItem
 import kotlinx.coroutines.*
 
-class FoodCreateViewModel(val database: FoodDatabaseDao,
+class FoodCreateViewModel(val database: FoodDao,
                           application: Application) : AndroidViewModel(application) {
 
     private var viewModelJob = Job()
