@@ -8,7 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import be.vives.fridgepal.database.FoodItem
 import be.vives.fridgepal.databinding.ListItemFoodItemBinding
 
-class FoodItemAdapter(val editClickListener: FoodItemListener, val deleteClickListener: FoodItemListener) : ListAdapter<FoodItem, FoodItemAdapter.FoodItemViewHolder>(FoodItemDiffCallback()) {
+class FoodItemAdapter(val editClickListener: FoodItemListener, val deleteClickListener: FoodItemListener)
+    : ListAdapter<FoodItem, FoodItemAdapter.FoodItemViewHolder>(FoodItemDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodItemViewHolder {
         return FoodItemViewHolder.from(parent)
     }

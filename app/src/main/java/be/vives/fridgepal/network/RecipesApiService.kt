@@ -1,7 +1,9 @@
 package be.vives.fridgepal.network
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
+import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
+import com.squareup.moshi.Types
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.Deferred
 import retrofit2.Retrofit
@@ -16,6 +18,15 @@ private const val BASE_URL =
 private val moshi = Moshi.Builder()
     .add(KotlinJsonAdapterFactory())
     .build()
+
+// TODO uitproberen
+// https://github.com/square/moshi/issues/646
+/*
+val moshi = Moshi.Builder().build()
+val type = Types.newParameterizedType(List::class.java, SearchResponse::class.java)
+val jsonAdapter: JsonAdapter<List<SearchResponse>> = moshi.adapter(type)
+val annotationData = jsonAdapter.fromJson(SearchResponse.toString())
+*/
 
 private val retrofit = Retrofit.Builder()
     .addConverterFactory(MoshiConverterFactory.create(moshi))

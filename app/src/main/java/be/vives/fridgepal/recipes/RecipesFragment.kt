@@ -23,10 +23,22 @@ class RecipesFragment : Fragment() {
         val recipesViewModel = ViewModelProvider(activity!!).get(RecipesViewModel::class.java)
 
         binding.buttonSearch.setOnClickListener {
-            recipesViewModel.getRecipeSearchResults(binding.editTextSearchTerm.text.toString())
+            val searchTerm = binding.editTextSearchTerm.text.toString()
+            if(searchTerm.isNotBlank())
+                recipesViewModel.getRecipeSearchResults(searchTerm)
         }
 
-        binding.setLifecycleOwner (this)
+
+        val adapter = RecipeAdapter()
+        binding.recyclerviewRecipes.adapter = adapter
+
+        recipesViewModel.recipes.observe(viewLifecycleOwner,{
+            it?.let{
+                adapter.submitList(it)
+            }
+        })
+
+        binding.setLifecycleOwner (viewLifecycleOwner)
         return binding.root
     }
 }
