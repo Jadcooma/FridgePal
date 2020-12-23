@@ -1,10 +1,7 @@
 package be.vives.fridgepal.network
 
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
-import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
-import com.squareup.moshi.Types
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import kotlinx.coroutines.Deferred
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -16,7 +13,7 @@ private const val BASE_URL =
     "https://edamam-recipe-search.p.rapidapi.com"
 
 private val moshi = Moshi.Builder()
-    .add(KotlinJsonAdapterFactory())
+//    .add(KotlinJsonAdapterFactory())
     .build()
 
 // TODO uitproberen
@@ -43,7 +40,6 @@ interface RecipesApiService {
     @Headers(
         "x-rapidapi-key: 45193a743dmshcedc423bda24bb5p1cd529jsn1bb0b2ad7386",
         "x-rapidapi-host: edamam-recipe-search.p.rapidapi.com")
-
     @GET("/search")
     fun getSearchRespons(@Query("q") ingredient : String):
             Deferred<SearchResponse>
