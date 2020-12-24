@@ -20,14 +20,17 @@ class RecipesFragment : Fragment() {
             inflater, R.layout.fragment_recipes, container, false)
 
         // TODO get from factory => Db access => CACHING
-        val recipesViewModel = ViewModelProvider(activity!!).get(RecipesViewModel::class.java)
+        val recipesViewModel = ViewModelProvider(activity!!)
+            .get(RecipesViewModel::class.java)
+
+        binding.viewModel = recipesViewModel
+        binding.setLifecycleOwner(this)
 
         binding.buttonSearch.setOnClickListener {
             val searchTerm = binding.editTextSearchTerm.text.toString()
             if(searchTerm.isNotBlank())
                 recipesViewModel.getRecipeSearchResults(searchTerm)
         }
-
 
         val adapter = RecipeAdapter()
         binding.recyclerviewRecipes.adapter = adapter

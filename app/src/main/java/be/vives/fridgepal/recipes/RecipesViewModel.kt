@@ -1,6 +1,5 @@
 package be.vives.fridgepal.recipes
 
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -27,18 +26,17 @@ class RecipesViewModel : ViewModel() {
 
     fun getRecipeSearchResults(searchTerm: String){
         coroutineScope.launch {
-            var getPropertiesDeferred = RecipesApi.retrofitService.getSearchRespons(searchTerm)
+            var getSearchResponsDeferred = RecipesApi.retrofitService.getSearchRespons(searchTerm)
             try{
-                var searchRespons = getPropertiesDeferred.await()
+                var searchRespons = getSearchResponsDeferred.await()
+                var foundRecipes = mutableListOf<Recipe>()
                 searchRespons.searchHits.forEach {
-                    recipes.value!!.plus(it)
+                    foundRecipes.add(it.recipe)
                 }
-                if(searchRespons.searchHits.isEmpty())
-                    _status.value = "NO RESULTS"
-                else
-                    _status.value = "SUCCES"
+                _recipes.value = foundRecipes
+                _status.value = "SUCCES!"
             } catch (t: Throwable){
-                    _status.value = "FAILURE"
+                    _status.value = "FAILURE: " + t.message
             }
         }
     }
