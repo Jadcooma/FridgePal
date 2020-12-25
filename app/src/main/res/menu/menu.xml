@@ -4,4 +4,7 @@
     <item
         android:id="@+id/recipesFragment"
         android:title="Zoek Recepten" />
+    <item
+        android:id="@+id/settingsFragment"
+        android:title="Instellingen" />
 </menu>

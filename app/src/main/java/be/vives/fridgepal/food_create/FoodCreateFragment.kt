@@ -18,7 +18,7 @@ import java.util.*
 class FoodCreateFragment : Fragment() {
 
     private lateinit var binding : FragmentFoodCreateBinding
-    private var selectedExpiryDate = Date() // huidige dag
+    private var selectedExpiryDate = Date() // huidig geselecteerde datum
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {

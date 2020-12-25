@@ -94,9 +94,18 @@ android {
 
         // RecyclerView
         implementation "androidx.recyclerview:recyclerview:$version_recyclerview"
+
+        // AndroidX Preference Library + extended version by Takisoft
+        // https://github.com/Gericop/Android-Support-Preference-V7-Fix#readme
+        // New Preference : TimePickerPreference by Takisoft
+        // https://github.com/Gericop/Android-Support-Preference-V7-Fix/wiki/Preference-types#timepickerpreference
+        implementation "androidx.preference:preference:$version_androidx_preference"
+        implementation 'com.takisoft.preferencex:preferencex:1.1.0'
+        implementation 'com.takisoft.preferencex:preferencex-datetimepicker:1.1.0'
     }
 }
 
 dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.preference:preference:1.1.1'
 }

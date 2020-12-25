@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <PreferenceCategory app:title="Meldingen">
+        <com.takisoft.preferencex.TimePickerPreference
+            android:key="alarm_time"
+            android:title="Tijdstip meldingen"
+            app:pref_hourFormat="h24"
+            app:pref_pickerTime="09:00"
+            app:pref_summaryHasTime="%s"/>
+        <SwitchPreference
+            android:defaultValue="false"
+            android:key="alarm_enabled"
+            android:title="Dagelijkse waarschuwingen" />
+    </PreferenceCategory>
+</PreferenceScreen>
