@@ -20,7 +20,7 @@ class RecipesFragment : Fragment() {
             inflater, R.layout.fragment_recipes, container, false)
 
         // TODO get from factory => Db access => CACHING
-        val recipesViewModel = ViewModelProvider(activity!!)
+        val recipesViewModel = ViewModelProvider(requireActivity())
             .get(RecipesViewModel::class.java)
 
         binding.viewModel = recipesViewModel

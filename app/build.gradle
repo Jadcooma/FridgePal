@@ -97,7 +97,7 @@ android {
 
         // AndroidX Preference Library + extended version by Takisoft
         // https://github.com/Gericop/Android-Support-Preference-V7-Fix#readme
-        // New Preference : TimePickerPreference by Takisoft
+        // TimePickerPreference by Takisoft
         // https://github.com/Gericop/Android-Support-Preference-V7-Fix/wiki/Preference-types#timepickerpreference
         implementation "androidx.preference:preference:$version_androidx_preference"
         implementation 'com.takisoft.preferencex:preferencex:1.1.0'
