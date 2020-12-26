@@ -16,7 +16,7 @@ class RecipesViewModel : ViewModel() {
     val recipes : LiveData<List<Recipe>>
         get() = _recipes
 
-    // TODO omvormen naar enum?
+    // TODO status verder uitwerken (vb geen internetconnectie)
     private val _status = MutableLiveData<String>()
     val status : LiveData<String>
         get() = _status
@@ -36,7 +36,7 @@ class RecipesViewModel : ViewModel() {
                 _recipes.value = foundRecipes
                 _status.value = "SUCCES!"
             } catch (t: Throwable){
-                    _status.value = "FAILURE: " + t.message
+                _status.value = "FAILURE: " + t.message
             }
         }
     }
