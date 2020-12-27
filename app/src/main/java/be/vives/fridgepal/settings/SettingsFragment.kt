@@ -2,22 +2,24 @@ package be.vives.fridgepal.settings
 
 import android.app.*
 import android.content.Context
-import android.content.Context.NOTIFICATION_SERVICE
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import androidx.core.app.NotificationCompat
+import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.preference.Preference
 import androidx.preference.PreferenceManager
 import androidx.preference.SwitchPreference
 import be.vives.fridgepal.R
 import com.takisoft.preferencex.PreferenceFragmentCompat
 import com.takisoft.preferencex.TimePickerPreference
+import java.text.SimpleDateFormat
 import java.util.*
 
 class SettingsFragment : PreferenceFragmentCompat() {
 
+    // TODO ViewModel zodat instanties niet opnieuw moeten aangemaakt worden na vernietiging fragment
     // Manager instanties : lazy ipv late init => thread-safe && eenmalige aanmaak instantie
     private val alarmManager: AlarmManager by lazy {
         context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
@@ -25,49 +27,62 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private val notificationManager by lazy{
         getNotificationManager(requireContext())
     }
+    private lateinit var timePickerPreference: TimePickerPreference
+    private lateinit var switchPreference: SwitchPreference
+    private lateinit var alarmIntent : Intent
+    private lateinit var alarmPendingIntent : PendingIntent
 
     override fun onCreatePreferencesFix(savedInstanceState: Bundle?, rootKey: String?) {
 
         setPreferencesFromResource(R.xml.settings, rootKey)
 
-        val timePickerPreference =
-            findPreference<TimePickerPreference>("alarm_time")!!
-        val switchPreference =
-            findPreference<SwitchPreference>("alarm_enabled")!!
+        timePickerPreference = findPreference("alarm_time")!!
+        switchPreference = findPreference("alarm_enabled")!!
+        // om waarde voor alarm_enabled op te halen, niet te verkrijgen uit switchPreference zelf
         val sharedPreferences =
             PreferenceManager.getDefaultSharedPreferences(context?.applicationContext)
 
-        createNotificationChannel()
-
         /* alarmIntent => om alarm in te stellen */
-        val alarmIntent = Intent(context, AlarmReceiver::class.java)
-        val alarmPendingIntent = PendingIntent.getBroadcast(
+        alarmIntent = Intent(context, AlarmReceiver::class.java)
+        alarmPendingIntent = PendingIntent.getBroadcast(
             context, NOTIFICATION_ID, alarmIntent, PendingIntent.FLAG_UPDATE_CURRENT
         )
+
+        createNotificationChannel()
+
+        timePickerPreference.onPreferenceChangeListener =
+            Preference.OnPreferenceChangeListener{ preference: Preference, newValue: Any ->
+                val timeWrapper = newValue as TimePickerPreference.TimeWrapper
+                val dateFromTimePicker = SimpleDateFormat("HH:mm")
+                    .parse(timeWrapper.hour.toString() +":"+ timeWrapper.minute.toString())
+                setAlarm(dateFromTimePicker!!)
+                true
+            }
 
         switchPreference.onPreferenceClickListener =
             Preference.OnPreferenceClickListener {
                 if (sharedPreferences.getBoolean("alarm_enabled", false)){
-
-                    val timeSelected : Date = timePickerPreference.time!!
-                    val calendar: Calendar = Calendar.getInstance().apply {
-                        timeInMillis = System.currentTimeMillis()
-                        set(Calendar.HOUR_OF_DAY, timeSelected.hours)
-                        set(Calendar.MINUTE, timeSelected.minutes)
-                    }
-
-                    alarmManager.setInexactRepeating ( // setExact niet mogelijk: API level >28 required
-                        AlarmManager.RTC_WAKEUP,
-                        System.currentTimeMillis(),
-                        calendar.timeInMillis,
-                        alarmPendingIntent
-                    )
-                    true
-                } else{
+                    setAlarm(timePickerPreference.time!!)
+                } else {
                     alarmManager.cancel(alarmPendingIntent)
-                    false
                 }
+                true
             }
+    }
+
+    private fun setAlarm(dateTimePicker: Date) {
+        val calendarAlarm: Calendar = getCalendarAlarm(dateTimePicker)
+
+        alarmManager.setInexactRepeating ( // setExact niet mogelijk: API level >28 required.0
+            AlarmManager.RTC_WAKEUP,
+            calendarAlarm.timeInMillis,
+            AlarmManager.INTERVAL_DAY,
+            alarmPendingIntent
+        )
+        Log.i("alarmMessage","Next Alarm: " +
+                "Day ${calendarAlarm.get(Calendar.DAY_OF_MONTH)}" +
+                " Hour ${calendarAlarm.get(Calendar.HOUR_OF_DAY)}" +
+                " Minute ${calendarAlarm.get(Calendar.MINUTE)}")
     }
 
     private fun createNotificationChannel() {
@@ -92,7 +107,27 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
     }
 
-    private fun cancelAlarm() {
-        // TODO annuleer intentPending in AlarmManager
+    /* Instellen alarm : als tijdstip vandaag al gepasseerd is, dan instellen op volgende dag */
+    private fun getCalendarAlarm(timeSelected: Date) : Calendar {
+        val calendarAlarm : Calendar =
+            Calendar.getInstance().apply {
+                timeInMillis = System.currentTimeMillis()
+                set(Calendar.HOUR_OF_DAY, timeSelected.hours)
+                set(Calendar.MINUTE, timeSelected.minutes)
+                set(Calendar.SECOND, 0)
+                set(Calendar.MILLISECOND, 0)
+            }
+        val isTimeInPast : Boolean
+                = calendarAlarm.timeInMillis <= System.currentTimeMillis()
+
+        if(isTimeInPast) {
+            calendarAlarm.apply {
+                set(
+                    Calendar.DAY_OF_YEAR,
+                    1 + calendarAlarm.get(Calendar.DAY_OF_YEAR)
+                )
+            }
+        }
+        return calendarAlarm
     }
 }

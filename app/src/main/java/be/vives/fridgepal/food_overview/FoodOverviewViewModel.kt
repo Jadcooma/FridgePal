@@ -14,7 +14,7 @@ class FoodOverviewViewModel(val database: FoodDao,
 
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
-    val listAllFood = database.getAllFood()
+    val listAllFood = database.getAllFoodSortedByDate()
 
     val clearButtonVisible = Transformations.map(listAllFood){
         it?.isNotEmpty()

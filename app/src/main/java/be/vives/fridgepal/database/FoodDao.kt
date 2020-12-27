@@ -20,8 +20,8 @@ public abstract interface FoodDao {
     @Query("SELECT * from food_item_table WHERE foodId = :key")
     fun getFoodById(key: Long): FoodItem?
 
-    @Query("SELECT * from food_item_table")
-    fun getAllFood(): LiveData<List<FoodItem>>
+    @Query("SELECT * from food_item_table ORDER BY expiryDate DESC")
+    fun getAllFoodSortedByDate(): LiveData<List<FoodItem>>
 
     @Query("DELETE FROM food_item_table")
     fun clear()
