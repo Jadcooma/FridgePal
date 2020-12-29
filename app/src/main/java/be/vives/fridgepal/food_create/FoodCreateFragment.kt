@@ -41,11 +41,11 @@ class FoodCreateFragment : Fragment() {
         binding.setLifecycleOwner(this)
 
         binding.buttonCreate.setOnClickListener {
-            if(checkFoodComplete()){ // controleer input velden voor aanmaak FoodItem
+            if(binding.editTextPersonName.text.isNotBlank()) {
                 foodCreateViewModel.setNewFoodItem(getFoodItemFromForm())
                 foodCreateViewModel.saveFoodItem()
             } else{
-                Toast.makeText(context, "Gelieve alle velden in te vullen", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Gelieve een naam in te vullen", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -57,21 +57,18 @@ class FoodCreateFragment : Fragment() {
 
         })
 
-        // Listener voor calendarView (calendarView.date retourneert altijd datum van vandaag)
+        // Listener voor calendarView (calendarView.date -> altijd datum van vandaag)
         binding.calendarExpiryDate.setOnDateChangeListener { view, year, month, dayOfMonth ->
-            selectedExpiryDate = GregorianCalendar(year,month,dayOfMonth).time
+            val calendarExpiryDate : Calendar = Calendar.getInstance().apply {
+                set(Calendar.YEAR, year)
+                set(Calendar.MONTH, month)
+                set(Calendar.DAY_OF_MONTH, dayOfMonth)
+            }
+            selectedExpiryDate = calendarExpiryDate.time
+            calendarExpiryDate
         }
 
         return binding.root
-    }
-
-    private fun checkFoodComplete(): Boolean {
-        val nameNotEmpty: Boolean = binding.editTextPersonName.text.isNotBlank()
-
-        //TODO checks voor datum:
-        // a) niet op dag in verleden (oplossing: minDate instellen? eventueel op currentDay +1)
-        val dateNotEmpty: Boolean = true
-        return (nameNotEmpty && dateNotEmpty)
     }
 
     private fun getFoodItemFromForm() : FoodItem {

@@ -15,7 +15,7 @@ import be.vives.fridgepal.databinding.FragmentFoodOverviewBinding
 
 class FoodOverviewFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
 
         //region * Boilerplate : databinding + viewModel from factory *
         // uitbreiding fragment met databinding: inflate met DataBindingUtil
@@ -76,7 +76,7 @@ class FoodOverviewFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return NavigationUI.onNavDestinationSelected(item, view!!.findNavController())
+        return NavigationUI.onNavDestinationSelected(item, requireView().findNavController())
                 || super.onOptionsItemSelected(item)
     }
 

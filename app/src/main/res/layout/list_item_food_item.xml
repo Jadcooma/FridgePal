@@ -21,13 +21,12 @@
 
         <TextView
             android:id="@+id/text_name"
-            android:layout_width="0dp"
+            android:layout_width="144dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="24dp"
             android:text="@{foodItem.name}"
-            app:layout_constraintEnd_toStartOf="@+id/text_expiryType"
+            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -35,28 +34,32 @@
             android:id="@+id/text_expiryType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="32dp"
-            app:foodExpiryDateString="@{foodItem}"
-            app:layout_constraintEnd_toEndOf="@id/text_expiryDate"
+            android:text="@{foodItem.expiryType}"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@+id/text_name"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/text_expiryDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:layout_marginEnd="32dp"
-            android:text="@{foodItem.expiryType}"
-            app:layout_constraintEnd_toStartOf="@+id/buttonEdit"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:colorByExpiryDate="@{foodItem}"
+            app:foodExpiryDateString="@{foodItem}"
+            app:layout_constraintStart_toEndOf="@id/text_expiryType"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/buttonEdit"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
             android:background="@android:drawable/ic_menu_edit"
             android:onClick="@{() -> editClickListener.onClick(foodItem)}"
             app:layout_constraintBottom_toBottomOf="@id/text_name"
@@ -65,10 +68,9 @@
 
         <Button
             android:id="@+id/buttonDelete"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="8dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="8dp"
             android:background="@android:drawable/ic_menu_delete"
             android:onClick="@{() -> deleteClickListener.onClick(foodItem)}"
             app:layout_constraintBottom_toBottomOf="@id/text_name"

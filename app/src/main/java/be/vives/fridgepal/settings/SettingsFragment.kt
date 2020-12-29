@@ -8,10 +8,13 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.annotation.RequiresApi
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.preference.Preference
 import androidx.preference.PreferenceManager
 import androidx.preference.SwitchPreference
 import be.vives.fridgepal.R
+import be.vives.fridgepal.food_overview.FoodOverviewViewModel
 import com.takisoft.preferencex.PreferenceFragmentCompat
 import com.takisoft.preferencex.TimePickerPreference
 import java.text.SimpleDateFormat
@@ -19,7 +22,6 @@ import java.util.*
 
 class SettingsFragment : PreferenceFragmentCompat() {
 
-    // TODO ViewModel zodat instanties niet opnieuw moeten aangemaakt worden na vernietiging fragment
     // Manager instanties : lazy ipv late init => thread-safe && eenmalige aanmaak instantie
     private val alarmManager: AlarmManager by lazy {
         context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
@@ -33,11 +35,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private lateinit var alarmPendingIntent : PendingIntent
 
     override fun onCreatePreferencesFix(savedInstanceState: Bundle?, rootKey: String?) {
-
         setPreferencesFromResource(R.xml.settings, rootKey)
 
         timePickerPreference = findPreference("alarm_time")!!
         switchPreference = findPreference("alarm_enabled")!!
+
         // om waarde voor alarm_enabled op te halen, niet te verkrijgen uit switchPreference zelf
         val sharedPreferences =
             PreferenceManager.getDefaultSharedPreferences(context?.applicationContext)
@@ -55,7 +57,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 val timeWrapper = newValue as TimePickerPreference.TimeWrapper
                 val dateFromTimePicker = SimpleDateFormat("HH:mm")
                     .parse(timeWrapper.hour.toString() +":"+ timeWrapper.minute.toString())
-                setAlarm(dateFromTimePicker!!)
+                if(sharedPreferences.getBoolean("alarm_enabled", false)){
+                    setAlarm(dateFromTimePicker!!)
+                }
                 true
             }
 
@@ -73,10 +77,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private fun setAlarm(dateTimePicker: Date) {
         val calendarAlarm: Calendar = getCalendarAlarm(dateTimePicker)
 
-        alarmManager.setInexactRepeating ( // setExact niet mogelijk: API level >28 required.0
+        alarmManager.setRepeating ( // setExact niet mogelijk: API level >28 required.0
             AlarmManager.RTC_WAKEUP,
-            calendarAlarm.timeInMillis,
-            AlarmManager.INTERVAL_DAY,
+            System.currentTimeMillis(),
+//            calendarAlarm.timeInMillis,
+            60000,
             alarmPendingIntent
         )
         Log.i("alarmMessage","Next Alarm: " +
@@ -91,7 +96,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
          Notification channels are only available in OREO and higher.
          So, add a check on SDK version.
          https://developer.android.com/codelabs/android-training-alarm-manager#3
-*/
+    */
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             // Create the NotificationChannel with all the parameters.
             val notificationChannel = NotificationChannel(
