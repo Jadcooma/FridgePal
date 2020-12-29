@@ -6,10 +6,11 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
-@Database(entities = [FoodItem::class], version = 1, exportSchema = false)
+@Database(entities = [FoodItem::class, DatabaseRecipe::class], version = 2, exportSchema = false)
 @TypeConverters(Converters::class) // voor conversie Long => Date
 abstract class AppDatabase : RoomDatabase() {
     abstract val FoodDao: FoodDao
+    abstract val RecipeDao: RecipeDao
 
     companion object  {
 

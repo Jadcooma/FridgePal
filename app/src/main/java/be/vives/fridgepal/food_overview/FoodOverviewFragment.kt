@@ -5,7 +5,7 @@ import android.view.*
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
@@ -23,13 +23,10 @@ class FoodOverviewFragment : Fragment() {
             inflater, R.layout.fragment_food_overview, container, false)
 
         val application = requireNotNull(this.activity).application
-
         // DAO meegeven aan ViewModel voor uitvoeren van queries op database
         val dataSource = AppDatabase.getInstance(application).FoodDao
-
         val viewModelFactory = FoodOverviewViewModelFactory(dataSource, application)
-
-        val foodOverviewViewModel = ViewModelProviders.of(this, viewModelFactory)
+        val foodOverviewViewModel = ViewModelProvider(this, viewModelFactory)
             .get(FoodOverviewViewModel::class.java)
 
         binding.foodOverviewViewModel = foodOverviewViewModel

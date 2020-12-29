@@ -8,9 +8,8 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import androidx.lifecycle.LiveData
+import androidx.lifecycle.*
 import androidx.lifecycle.Observer
-import androidx.lifecycle.Transformations
 import be.vives.fridgepal.R
 import be.vives.fridgepal.database.AppDatabase
 import be.vives.fridgepal.database.FoodItem
@@ -29,30 +28,29 @@ class AlarmReceiver : BroadcastReceiver() {
     }
 
     private fun deliverNotification(context: Context) {
-        val liveListFood = dataSource.FoodDao.getAllFoodSortedByDate()
 
-        val listFood = mutableListOf<FoodItem>()
+        val liveListFood = RefreshableLiveData({dataSource.FoodDao.getAllFoodSortedByDate()} )
+        //TODO LiveData is niet uitleesbaar (liveListFood.value == null)
+        // ook niet na refresh via RefreshableLiveData met LiveDataMediator
+/*
+        var listFood = mutableListOf<FoodItem>()
 
-        val observer = Observer<List<FoodItem>>{
-            it.forEach {
-                listFood.add(it)
-            }
+        liveListFood.observeForever {
+            listFood.addAll(it)
         }
-
-        // geen lifeCycleOwner beschikbaar -> observeForever
-        liveListFood.observeForever(observer) // eenmalig observeren
-        liveListFood.removeObserver(observer)
-
+        liveListFood.refresh()
+*/
         val contentIntent = Intent(context, this::class.java)
 
         val contentPendingIntent = PendingIntent.getActivity(
             context, NOTIFICATION_ID, contentIntent, PendingIntent.FLAG_UPDATE_CURRENT
         )
 
+
         val notificationBuilder = NotificationCompat.Builder(context, PRIMARY_CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notification_alert)
             .setContentTitle(context.getString(R.string.app_name) +": waarschuwing")
-            .setContentText("Naam voedingsmiddel: ")
+            .setContentText("Aantal vervallen: xxx")
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setDefaults(NotificationCompat.DEFAULT_ALL)
             .setContentIntent(contentPendingIntent)

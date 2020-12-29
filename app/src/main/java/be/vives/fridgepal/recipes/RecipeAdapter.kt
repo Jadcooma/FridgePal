@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import be.vives.fridgepal.databinding.ListItemRecipeBinding
-import be.vives.fridgepal.network.Recipe
+import be.vives.fridgepal.models.Recipe
 
 class RecipeAdapter : ListAdapter<Recipe, RecipeAdapter.RecipeViewHolder>(RecipeDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeViewHolder {

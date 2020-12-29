@@ -11,16 +11,15 @@ import be.vives.fridgepal.R
 import be.vives.fridgepal.databinding.FragmentRecipesBinding
 
 class RecipesFragment : Fragment() {
-
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
 
         val binding : FragmentRecipesBinding = DataBindingUtil.inflate(
             inflater, R.layout.fragment_recipes, container, false)
 
-        // TODO get from factory => Db access => CACHING
-        val recipesViewModel = ViewModelProvider(requireActivity())
+        val application = requireNotNull(this.activity).application
+        val viewModelFactory = RecipesViewModelFactory(application)
+        val recipesViewModel = ViewModelProvider(this, viewModelFactory)
             .get(RecipesViewModel::class.java)
 
         binding.viewModel = recipesViewModel

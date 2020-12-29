@@ -6,7 +6,7 @@ apply plugin: 'androidx.navigation.safeargs'
 
 android {
     compileSdkVersion 30
-    buildToolsVersion "30.0.2"
+    buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "be.vives.fridgepal"
@@ -57,10 +57,11 @@ android {
         // Android KTX
         implementation "androidx.core:core-ktx:$version_core"
 
-        // Room and Lifecycle dependencies
+        // Room
         implementation "androidx.room:room-runtime:$version_room"
-        implementation 'androidx.legacy:legacy-support-v4:1.0.0'
         kapt "androidx.room:room-compiler:$version_room"
+        // Lifecycle dependencies
+        implementation 'androidx.legacy:legacy-support-v4:1.0.0'
         implementation "androidx.lifecycle:lifecycle-extensions:$version_lifecycle_extensions"
 
         // Coroutines
@@ -68,7 +69,6 @@ android {
         implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$version_coroutine"
         implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:$version_retrofit_coroutines_adapter"
 
-        //testChange
         // Navigation
         implementation "android.arch.navigation:navigation-fragment-ktx:$version_navigation"
         implementation "android.arch.navigation:navigation-ui-ktx:$version_navigation"

@@ -6,7 +6,7 @@
     <data>
         <variable
             name="recipe"
-            type="be.vives.fridgepal.network.Recipe" />
+            type="be.vives.fridgepal.models.Recipe" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

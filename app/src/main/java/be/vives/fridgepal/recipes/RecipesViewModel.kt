@@ -1,20 +1,27 @@
 package be.vives.fridgepal.recipes
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import be.vives.fridgepal.network.Recipe
+import be.vives.fridgepal.database.AppDatabase
+import be.vives.fridgepal.network.NetworkRecipe
 import be.vives.fridgepal.network.RecipesApi
+import be.vives.fridgepal.repository.RecipesRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import java.lang.Exception
 
-class RecipesViewModel : ViewModel() {
+class RecipesViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val _recipes = MutableLiveData<List<Recipe>>()
-    val recipes : LiveData<List<Recipe>>
-        get() = _recipes
+    private val database = AppDatabase.getInstance(application)
+    private val recipesRepository = RecipesRepository(database)
+
+    val recipes = recipesRepository.recipes
+    val dataRecipes = recipes.value
 
     // TODO status verder uitwerken (vb geen internetconnectie)
     private val _status = MutableLiveData<String>()
@@ -26,17 +33,12 @@ class RecipesViewModel : ViewModel() {
 
     fun getRecipeSearchResults(searchTerm: String){
         coroutineScope.launch {
-            var getSearchResponsDeferred = RecipesApi.retrofitService.getSearchRespons(searchTerm)
             try{
-                var searchRespons = getSearchResponsDeferred.await()
-                var foundRecipes = mutableListOf<Recipe>()
-                searchRespons.searchHits.forEach {
-                    foundRecipes.add(it.recipe)
-                }
-                _recipes.value = foundRecipes
-                _status.value = "SUCCES!"
-            } catch (t: Throwable){
-                _status.value = "FAILURE: " + t.message
+                //TODO want deleteRecipes() is workaround wegens geen vervanging bij nieuwe search
+                recipesRepository.deleteRecipes()
+                recipesRepository.refreshRecipes(searchTerm)
+            } catch (e: Exception){
+                _status.value = "FAILURE: " + e.message
             }
         }
     }

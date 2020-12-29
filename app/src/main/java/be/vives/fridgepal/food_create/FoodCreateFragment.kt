@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import be.vives.fridgepal.R
 import be.vives.fridgepal.database.AppDatabase
@@ -34,7 +34,7 @@ class FoodCreateFragment : Fragment() {
 
         val viewModelFactory = FoodCreateViewModelFactory(dataSource, application)
 
-        val foodCreateViewModel = ViewModelProviders.of(this, viewModelFactory)
+        val foodCreateViewModel = ViewModelProvider(this, viewModelFactory)
             .get(FoodCreateViewModel::class.java)
 
         binding.foodCreateViewModel = foodCreateViewModel
@@ -58,14 +58,13 @@ class FoodCreateFragment : Fragment() {
         })
 
         // Listener voor calendarView (calendarView.date -> altijd datum van vandaag)
-        binding.calendarExpiryDate.setOnDateChangeListener { view, year, month, dayOfMonth ->
+        binding.calendarExpiryDate.setOnDateChangeListener { _, year, month, dayOfMonth ->
             val calendarExpiryDate : Calendar = Calendar.getInstance().apply {
                 set(Calendar.YEAR, year)
                 set(Calendar.MONTH, month)
                 set(Calendar.DAY_OF_MONTH, dayOfMonth)
             }
             selectedExpiryDate = calendarExpiryDate.time
-            calendarExpiryDate
         }
 
         return binding.root

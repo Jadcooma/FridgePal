@@ -9,11 +9,11 @@ class FoodOverviewViewModelFactory(
     private val dataSource: FoodDao,
     private val application: Application) : ViewModelProvider.Factory {
 
-        @Suppress("unchecked_cast")
-        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(FoodOverviewViewModel::class.java)) {
-                return FoodOverviewViewModel(dataSource, application) as T
-            }
-            throw IllegalArgumentException("Unknown ViewModel class")
+    @Suppress("unchecked_cast")
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(FoodOverviewViewModel::class.java)) {
+            return FoodOverviewViewModel(dataSource, application) as T
         }
+        throw IllegalArgumentException("Unknown ViewModel class")
+    }
 }
