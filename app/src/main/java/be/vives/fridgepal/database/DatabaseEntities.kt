@@ -1,9 +1,13 @@
 package be.vives.fridgepal.database
 
+import android.content.Context
+import androidx.preference.PreferenceManager
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import be.vives.fridgepal.models.Recipe
+import org.joda.time.DateTime
+import org.joda.time.Duration
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -50,10 +54,13 @@ fun FoodItem.isExpired(): Boolean {
  * True if expiry type is TGT
  * and threshold before expiry date has passed
  */
-fun FoodItem.isNearlyExpired(): Boolean{
-    val treshold = //TODO get threshold from settings
-        Date(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(3))
-    return expiryDate.before(treshold) && expiryType.equals("TGT")
+fun FoodItem.isNearlyExpired(context: Context): Boolean{
+    val daysThreshold = PreferenceManager.getDefaultSharedPreferences(context)
+        .getString("tgt_threshold","3")
+    val todayMillis = DateTime.now().withTimeAtStartOfDay().millis
+
+    val threshold = Date(todayMillis + TimeUnit.DAYS.toMillis(daysThreshold!!.toLong()))
+    return expiryDate.before(threshold) && expiryType.equals("TGT")
 }
 
 /**

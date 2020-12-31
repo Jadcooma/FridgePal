@@ -1,13 +1,10 @@
-package be.vives.fridgepal.recipes
+package be.vives.fridgepal.recipes_search
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import be.vives.fridgepal.database.AppDatabase
-import be.vives.fridgepal.network.NetworkRecipe
-import be.vives.fridgepal.network.RecipesApi
 import be.vives.fridgepal.repository.RecipesRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

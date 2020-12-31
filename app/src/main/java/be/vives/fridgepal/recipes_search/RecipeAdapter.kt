@@ -1,4 +1,4 @@
-package be.vives.fridgepal.recipes
+package be.vives.fridgepal.recipes_search
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

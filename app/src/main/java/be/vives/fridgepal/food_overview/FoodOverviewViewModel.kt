@@ -28,7 +28,7 @@ class FoodOverviewViewModel(val database: FoodDao,
 
     val numFoodNearlyExpired = Transformations.map(listAllFood){
         it.let{
-            it.filter{it.isNearlyExpired()}.size
+            it.filter{it.isNearlyExpired(application.applicationContext)}.size
         }
     }
 

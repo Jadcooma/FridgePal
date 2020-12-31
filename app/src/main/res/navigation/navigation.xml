@@ -27,7 +27,7 @@
     </fragment>
     <fragment
         android:id="@+id/recipesFragment"
-        android:name="be.vives.fridgepal.recipes.RecipesFragment"
+        android:name="be.vives.fridgepal.recipes_search.RecipesFragment"
         android:label="RecipesFragment"
         tools:layout="@layout/fragment_recipes">
         <action

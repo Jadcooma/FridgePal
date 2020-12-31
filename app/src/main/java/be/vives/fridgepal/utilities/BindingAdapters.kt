@@ -28,7 +28,7 @@ fun TextView.setColorByExpiryDate(item: FoodItem) {
         val color = when {
             it.isCautionRequired() -> 0xFFFFFF66 // Yellow
             it.isExpired() -> 0xFFFF4444 // android.R.color.holo_red_light
-            it.isNearlyExpired() -> 0xFFFFBB33 //  android.R.color.holo_orange_light
+            it.isNearlyExpired(context) -> 0xFFFFBB33 //  android.R.color.holo_orange_light
             else -> 0xFFFFFFFF // android.R.color.background_light
         }
         // color from resources : API level >= 23 (nu 19)

@@ -75,7 +75,8 @@ class MainActivity : AppCompatActivity() {
             "KEY_NUM_CAUTION" to numFoodCautionRequired
         )
 
-        val periodAlarm : org.joda.time.Period = getPeriodFromString(
+        //region Berkenen van delay voor 1e uitvoering PeriodicWork via gekozen tijdstip
+        val periodAlarm : Period = getPeriodFromString(
             preferences.getString("alarm_time", "")!!
         )
 
@@ -84,10 +85,11 @@ class MainActivity : AppCompatActivity() {
             .plusMinutes(periodAlarm.minutes)
 
         val minutesDelayAlarm : Long = getMinutesDelayAlarm(timeAlarm)
+        //endregion
 
         val repeatingRequest =
             PeriodicWorkRequestBuilder<NotificationWorker>(1, TimeUnit.DAYS)
-//            .setInitialDelay(minutesDelayAlarm, TimeUnit.MINUTES)
+            .setInitialDelay(minutesDelayAlarm, TimeUnit.MINUTES)
             .setInputData(dataNumWarnings)
             .build()
 
