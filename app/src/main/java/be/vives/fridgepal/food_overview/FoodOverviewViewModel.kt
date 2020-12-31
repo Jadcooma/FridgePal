@@ -6,6 +6,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import be.vives.fridgepal.database.FoodDao
+import be.vives.fridgepal.database.isCautionRequired
+import be.vives.fridgepal.database.isExpired
+import be.vives.fridgepal.database.isNearlyExpired
 import kotlinx.coroutines.*
 
 class FoodOverviewViewModel(val database: FoodDao,
@@ -15,6 +18,25 @@ class FoodOverviewViewModel(val database: FoodDao,
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     val listAllFood = database.getAllFoodSortedByDate()
+
+    /* Drie transformations voor notifications */
+    val numFoodExpired = Transformations.map(listAllFood){
+        it.let{
+            it.filter{it.isExpired()}.size
+        }
+    }
+
+    val numFoodNearlyExpired = Transformations.map(listAllFood){
+        it.let{
+            it.filter{it.isNearlyExpired()}.size
+        }
+    }
+
+    val numFoodCautionRequired = Transformations.map(listAllFood){
+        it.let{
+            it.filter{it.isCautionRequired()}.size
+        }
+    }
 
     val clearButtonVisible = Transformations.map(listAllFood){
         it?.isNotEmpty()

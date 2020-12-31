@@ -5,6 +5,7 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import be.vives.fridgepal.models.Recipe
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 @Entity(tableName = "food_item_table")
 data class FoodItem(
@@ -24,7 +25,7 @@ data class DatabaseRecipe(
     val name: String
 )
 
-// extensiefuncties : omzetten Database Class naar Model Class
+// extensie functies : omzetten Database Class naar Model Class
 
 fun List<DatabaseRecipe>.asDomainModel(): List<Recipe>{
     return map{
@@ -35,4 +36,30 @@ fun List<DatabaseRecipe>.asDomainModel(): List<Recipe>{
             source = it.source
         )
     }
+}
+
+/**
+ * True if expiry type is TGT and expiry date has passed
+ */
+fun FoodItem.isExpired(): Boolean {
+    return expiryDate.before(Date(System.currentTimeMillis()))
+            && expiryType.equals("TGT")
+}
+
+/**
+ * True if expiry type is TGT
+ * and threshold before expiry date has passed
+ */
+fun FoodItem.isNearlyExpired(): Boolean{
+    val treshold = //TODO get threshold from settings
+        Date(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(3))
+    return expiryDate.before(treshold) && expiryType.equals("TGT")
+}
+
+/**
+ * True if expiry type is TGT and expiry date has passed
+ */
+fun FoodItem.isCautionRequired(): Boolean{
+    return expiryDate.before(Date(System.currentTimeMillis()))
+            && expiryType.equals("THT")
 }

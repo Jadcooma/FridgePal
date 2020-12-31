@@ -84,7 +84,7 @@ android {
         implementation "com.squareup.retrofit2:converter-scalars:$version_retrofit"
 
         implementation "com.squareup.moshi:moshi:$version_moshi"
-//        implementation "com.squareup.moshi:moshi-kotlin:$version_moshi"
+        //        implementation "com.squareup.moshi:moshi-kotlin:$version_moshi"
         implementation "com.squareup.retrofit2:converter-moshi:$version_retrofit"
         // Codegen adapter : https://github.com/square/moshi#kotlin
         kapt "com.squareup.moshi:moshi-kotlin-codegen:$version_moshi_codegen"
@@ -94,6 +94,12 @@ android {
 
         // RecyclerView
         implementation "androidx.recyclerview:recyclerview:$version_recyclerview"
+
+        // WorkManager
+        implementation "androidx.work:work-runtime-ktx:$version_work"
+
+        // Joda Time (for warnings)
+        implementation "net.danlew:android.joda:$version_joda"
 
         // AndroidX Preference Library + extended version by Takisoft
         // https://github.com/Gericop/Android-Support-Preference-V7-Fix#readme
