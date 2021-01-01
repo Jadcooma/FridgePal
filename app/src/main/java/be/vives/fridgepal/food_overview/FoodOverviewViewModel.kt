@@ -67,9 +67,6 @@ class FoodOverviewViewModel(val database: FoodDao,
         _navigateToFoodDelete.value = id
     }
 
-    fun onFoodDeleteNavigated(){
-        _navigateToFoodDelete.value = null
-    }
     //endregion
 
     //region * CLEAR database *

@@ -45,9 +45,9 @@ class FoodOverviewFragment : Fragment() {
                 foodId -> foodOverviewViewModel.onFoodDeleteClicked(foodId)
         }
 
-        //TODO Edit scherm
         foodOverviewViewModel.navigateToFoodEdit.observe(viewLifecycleOwner, {
-            Toast.makeText(context, "EDIT PAGINA TO DO", Toast.LENGTH_SHORT).show()
+            this.findNavController().navigate(
+                FoodOverviewFragmentDirections.actionFoodOverviewFragmentToFoodEditFragment(it))
         })
 
         foodOverviewViewModel.navigateToFoodDelete.observe(viewLifecycleOwner,{

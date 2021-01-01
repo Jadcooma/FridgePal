@@ -1,44 +1,17 @@
 package be.vives.fridgepal.food_create
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import be.vives.fridgepal.database.FoodDao
 import be.vives.fridgepal.database.FoodItem
+import be.vives.fridgepal.viewmodels.FoodSingleViewModel
 import kotlinx.coroutines.*
 
-class FoodCreateViewModel(val database: FoodDao,
-                          application: Application) : AndroidViewModel(application) {
-
-    private var viewModelJob = Job()
-
-    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
-
-    private val _navigateToOverview = MutableLiveData<Boolean>()
-    val navigateToOverview : LiveData<Boolean>
-        get() = _navigateToOverview
-
-    // ingesteld in fragment met viewmodel.setNewFoodItem(foodItem: FoodItem)
-    private val newFoodItem = MutableLiveData<FoodItem>()
-
-    fun doneNavigating() {
-        _navigateToOverview.value = null;
-    }
-
-    // Cancel job bij vernietiging viewModel
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
-    }
-
-    fun setNewFoodItem(foodItem: FoodItem){
-        newFoodItem.value = foodItem;
-    }
+class FoodCreateViewModel(database : FoodDao, application: Application)
+    : FoodSingleViewModel(database, application) {
 
     fun saveFoodItem(){
         uiScope.launch {
-            newFoodItem.value?.let { insert(it) };
+            foodItem.value?.let { insert(it) };
             _navigateToOverview.value = true
         }
     }
@@ -48,6 +21,5 @@ class FoodCreateViewModel(val database: FoodDao,
             database.insert(foodItem)
         }
     }
-
 
 }

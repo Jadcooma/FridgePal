@@ -2,7 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".food_create.FoodCreateFragment">
+    tools:context=".food_edit.FoodEditFragment">
+
+    <data>
+        <variable
+            name="foodItem"
+            type="be.vives.fridgepal.database.FoodItem" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -52,6 +58,7 @@
             android:layout_marginEnd="32dp"
             android:ems="10"
             android:inputType="textPersonName"
+            android:text="@{foodItem.name}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -62,13 +69,14 @@
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="@id/editTextPersonName"
             app:layout_constraintTop_toTopOf="@+id/textExpiryType">
-
             <RadioButton
                 android:id="@+id/radioTHT"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="THT"
                 android:checked="true"
-                android:text="THT" />
+            />
+<!--            app:isTHT="@{foodItem}"-->
             <RadioButton
                 android:id="@+id/radioTGT"
                 android:layout_width="wrap_content"
@@ -77,8 +85,8 @@
                 android:text="TGT"
                 app:layout_constraintStart_toEndOf="@+id/radioTHT"
                 app:layout_constraintTop_toTopOf="@+id/textExpiryType"/>
+<!--            app:isTHT="@{foodItem}"-->
         </RadioGroup>
-
 
         <CalendarView
             android:id="@+id/calendarExpiryDate"
@@ -89,17 +97,16 @@
             app:minDate="@{System.currentTimeMillis()}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textExpiryDate" />
-
+<!--        app:setDate="@{foodEditViewModel.foodItem.expiryDate}"-->
         <Button
             android:id="@+id/buttonNavigate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Toevoegen"
+            android:text="Aanpassen"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/calendarExpiryDate"
-            />
+            app:layout_constraintTop_toBottomOf="@+id/calendarExpiryDate"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

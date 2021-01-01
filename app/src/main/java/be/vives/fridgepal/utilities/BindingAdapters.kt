@@ -1,8 +1,8 @@
 package be.vives.fridgepal
 
-import android.graphics.Color
 import android.widget.CalendarView
 import android.widget.ImageView
+import android.widget.RadioButton
 import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
@@ -13,7 +13,6 @@ import be.vives.fridgepal.database.isNearlyExpired
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import java.util.*
-import java.util.concurrent.TimeUnit
 
 @BindingAdapter("foodExpiryDateString")
 fun TextView.setFoodExpiryDateString(item: FoodItem) {
@@ -56,15 +55,17 @@ fun CalendarView.setXmlMinDate(minDate: Long){
     setMinDate(minDate)
 }
 
-// TODO RECIPES aanklikbare url met source als weergegeven text
+/* TODO NullPointerException voor parameter foodItem voor onderstaande BindingAdapters,
+        nochtans wordt @{foodItem.name} als android:text in XML wel correct uitgelezen
+ */
+
 /*
-@BindingAdapter("linkWithSource")
-fun TextView.setHyperLinkUrl( recipe: Recipe ){
-    val hyperlink = "<a href='${recipe.url}'>${recipe.source}</a>"
-    if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.N)
-        this.setText(hyperlink)
-    else
-        this.setText(Html.fromHtml(hyperlink))
-    this.movementMethod = LinkMovementMethod.getInstance()
+@BindingAdapter("isTHT")
+fun RadioButton.setIsTHT(foodItem: FoodItem){
+    isChecked = foodItem.expiryType.equals("THT")
 }
-*/
+
+@BindingAdapter("setDate")
+fun CalendarView.setDate(date: Date){
+    setDate(date)
+}*/
