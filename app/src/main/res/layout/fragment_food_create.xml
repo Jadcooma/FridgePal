@@ -14,7 +14,8 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginTop="64dp"
-            android:text="Naam"
+            android:text="@string/food_name_NL"
+            android:labelFor="@id/editTextPersonName"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -26,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginTop="64dp"
-            android:text="Type"
+            android:text="@string/food_type_NL"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -38,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
             android:layout_marginTop="64dp"
-            android:text="Datum einde houdbaarheid"
+            android:text="@string/date_NL"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -53,7 +54,8 @@
             android:ems="10"
             android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:autofillHints="@string/food_nameAutoFil_NL" />
 
         <RadioGroup
             android:id="@+id/radioGroupType"
@@ -68,13 +70,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true"
-                android:text="THT" />
+                android:text="@string/tht_NL" />
             <RadioButton
                 android:id="@+id/radioTGT"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="56dp"
-                android:text="TGT"
+                android:text="@string/tgt_NL"
                 app:layout_constraintStart_toEndOf="@+id/radioTHT"
                 app:layout_constraintTop_toTopOf="@+id/textExpiryType"/>
         </RadioGroup>
@@ -94,7 +96,7 @@
             android:id="@+id/buttonNavigate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Toevoegen"
+            android:text="@string/button_add_food_NL"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

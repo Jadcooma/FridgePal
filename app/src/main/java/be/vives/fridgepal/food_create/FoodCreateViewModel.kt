@@ -4,7 +4,9 @@ import android.app.Application
 import be.vives.fridgepal.database.FoodDao
 import be.vives.fridgepal.database.FoodItem
 import be.vives.fridgepal.viewmodels.FoodSingleViewModel
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class FoodCreateViewModel(database : FoodDao, application: Application)
     : FoodSingleViewModel(database, application) {

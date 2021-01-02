@@ -44,8 +44,8 @@ class NotificationWorker(appContext: Context, params: WorkerParameters) :
             val notificationBuilder =
                 NotificationCompat.Builder(applicationContext, PRIMARY_CHANNEL_ID)
                     .setSmallIcon(R.drawable.ic_notification_alert)
-                    .setContentTitle("FridgePal Melding")
-                    .setContentText("U heeft producten met een waarschuwing")
+                    .setContentTitle(applicationContext.getString(R.string.notification_NL))
+                    .setContentText(applicationContext.getString(R.string.notification_descr_NL))
                     .setStyle(NotificationCompat.BigTextStyle()
                         .bigText(getWarningSummary(numExpired, numNearExpired, numCaution)))
                     .setPriority(NotificationCompat.PRIORITY_HIGH)
@@ -60,11 +60,11 @@ class NotificationWorker(appContext: Context, params: WorkerParameters) :
     private fun getWarningSummary( numExpired: Int, numNearExpired: Int, numCaution: Int): String {
         val sb = StringBuilder()
         if (numExpired != 0)
-            sb.append("Aantal over TGT: $numExpired \n")
+            sb.append(applicationContext.getString(R.string.num_expired_NL) + " $numExpired \n")
         if (numNearExpired != 0)
-            sb.append("Aantal bijna over TGT: $numNearExpired \n")
+            sb.append(applicationContext.getString(R.string.num_near_expired_NL) + "$numNearExpired \n")
         if (numCaution != 0)
-            sb.append("Aantal over THT: $numCaution \n")
+            sb.append(applicationContext.getString(R.string.num_caution_NL) + "$numCaution \n")
         return sb.trimEnd().toString()
     }
 }

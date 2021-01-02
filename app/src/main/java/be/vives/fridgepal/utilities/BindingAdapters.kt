@@ -2,7 +2,6 @@ package be.vives.fridgepal
 
 import android.widget.CalendarView
 import android.widget.ImageView
-import android.widget.RadioButton
 import android.widget.TextView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
@@ -12,7 +11,6 @@ import be.vives.fridgepal.database.isExpired
 import be.vives.fridgepal.database.isNearlyExpired
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import java.util.*
 
 @BindingAdapter("foodExpiryDateString")
 fun TextView.setFoodExpiryDateString(item: FoodItem) {

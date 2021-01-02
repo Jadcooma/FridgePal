@@ -45,7 +45,8 @@ class FoodCreateFragment : Fragment() {
                 foodCreateViewModel.setFoodItem(getFoodItemFromForm())
                 foodCreateViewModel.saveFoodItem()
             } else{
-                Toast.makeText(context, "Gelieve een naam in te vullen", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context,
+                    context?.getString(R.string.name_required_NL), Toast.LENGTH_SHORT).show()
             }
         }
 

@@ -6,7 +6,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import be.vives.fridgepal.database.FoodDao
 import be.vives.fridgepal.database.FoodItem
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 
 open class FoodSingleViewModel (val database: FoodDao, application: Application): AndroidViewModel(application) {
 

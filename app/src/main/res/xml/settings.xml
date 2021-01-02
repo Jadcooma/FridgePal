@@ -4,17 +4,17 @@
     <PreferenceCategory app:title="Meldingen">
         <com.takisoft.preferencex.TimePickerPreference
             android:key="alarm_time"
-            android:title="Tijdstip meldingen"
+            android:title="@string/time_notifications_NL"
             app:pref_hourFormat="h24"
             app:pref_pickerTime="09:00"
             app:pref_summaryHasTime="%s"/>
         <SwitchPreference
             android:key="alarm_enabled"
-            android:title="Dagelijkse waarschuwingen"
+            android:title="@string/enable_notifications_NL"
             android:defaultValue="false"/>
         <com.takisoft.preferencex.AutoSummaryEditTextPreference
             android:key="tgt_threshold"
-            android:title="Aantal dagen alarmgrens TGT"
+            android:title="@string/num_days_threshold_NL"
             android:inputType="number"
             android:defaultValue="3"/>
     </PreferenceCategory>

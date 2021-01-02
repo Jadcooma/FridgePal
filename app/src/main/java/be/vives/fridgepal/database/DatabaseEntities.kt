@@ -2,12 +2,10 @@ package be.vives.fridgepal.database
 
 import android.content.Context
 import androidx.preference.PreferenceManager
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import be.vives.fridgepal.models.Recipe
 import org.joda.time.DateTime
-import org.joda.time.Duration
 import java.util.*
 import java.util.concurrent.TimeUnit
 

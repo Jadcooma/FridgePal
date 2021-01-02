@@ -13,8 +13,6 @@ import be.vives.fridgepal.R
 import be.vives.fridgepal.database.AppDatabase
 import be.vives.fridgepal.database.FoodItem
 import be.vives.fridgepal.databinding.FragmentFoodEditBinding
-import be.vives.fridgepal.food_create.FoodCreateViewModel
-import be.vives.fridgepal.food_create.FoodCreateViewModelFactory
 import java.util.*
 
 class FoodEditFragment : Fragment() {
@@ -54,8 +52,8 @@ class FoodEditFragment : Fragment() {
                 foodEditViewModel.setFoodItem(getFoodItemFromForm(foodId))
                 foodEditViewModel.editFoodItem()
             } else{
-                Toast.makeText(
-                    context, "Gelieve een naam in te vullen", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context,
+                    context?.getString(R.string.name_required_NL), Toast.LENGTH_SHORT).show()
             }
         }
 

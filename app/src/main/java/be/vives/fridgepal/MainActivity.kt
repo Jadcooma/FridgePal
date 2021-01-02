@@ -1,8 +1,5 @@
 package be.vives.fridgepal
 
-import android.app.PendingIntent
-import android.app.TaskStackBuilder
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -89,7 +86,7 @@ class MainActivity : AppCompatActivity() {
 
         val repeatingRequest =
             PeriodicWorkRequestBuilder<NotificationWorker>(1, TimeUnit.DAYS)
-            .setInitialDelay(minutesDelayAlarm, TimeUnit.MINUTES)
+//            .setInitialDelay(minutesDelayAlarm, TimeUnit.MINUTES)
             .setInputData(dataNumWarnings)
             .build()
 
