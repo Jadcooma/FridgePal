@@ -1,10 +1,14 @@
 package be.vives.fridgepal.work
 
+import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.TaskStackBuilder
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
@@ -40,6 +44,22 @@ class NotificationWorker(appContext: Context, params: WorkerParameters) :
                 TaskStackBuilder.create(applicationContext).run {
                     addNextIntentWithParentStack(contentIntent) // Add the intent, which inflates the back stack
                     getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)}
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+                // Create the required NotificationChannel with all parameters if Android Version >= Oreo
+                val notificationChannel = NotificationChannel(
+                    PRIMARY_CHANNEL_ID,
+                    applicationContext.getString(R.string.app_name),
+                    NotificationManager.IMPORTANCE_HIGH
+                )
+                notificationChannel.enableLights(true)
+                notificationChannel.lightColor = Color.RED
+                notificationChannel.enableVibration(true)
+                notificationChannel.description =
+                    applicationContext.getString(R.string.notification_channel_descr_NL)
+                // No new channel created if one with same ID already exists
+                notificationManager.createNotificationChannel(notificationChannel)
+            }
 
             val notificationBuilder =
                 NotificationCompat.Builder(applicationContext, PRIMARY_CHANNEL_ID)

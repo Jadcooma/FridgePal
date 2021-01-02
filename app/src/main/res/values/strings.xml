@@ -22,4 +22,5 @@
     <string name="time_notifications_NL">Tijdstip meldingen</string>
     <string name="enable_notifications_NL">Dagelijkse waarschuwingen</string>
     <string name="num_days_threshold_NL">Aantal dagen alarmgrens TGT</string>
+    <string name="notification_channel_descr_NL">Meldingen over vervaldata</string>
 </resources>

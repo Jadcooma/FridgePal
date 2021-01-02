@@ -21,7 +21,7 @@ class FoodCreateFragment : Fragment() {
     private var selectedExpiryDate = Date() // huidig geselecteerde datum
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
         
         // uitbreiding fragment met databinding: inflate met DataBindingUtil
         binding = DataBindingUtil.inflate(

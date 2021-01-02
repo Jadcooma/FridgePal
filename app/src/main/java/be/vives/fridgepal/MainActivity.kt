@@ -86,7 +86,7 @@ class MainActivity : AppCompatActivity() {
 
         val repeatingRequest =
             PeriodicWorkRequestBuilder<NotificationWorker>(1, TimeUnit.DAYS)
-//            .setInitialDelay(minutesDelayAlarm, TimeUnit.MINUTES)
+            .setInitialDelay(minutesDelayAlarm, TimeUnit.MINUTES)
             .setInputData(dataNumWarnings)
             .build()
 
