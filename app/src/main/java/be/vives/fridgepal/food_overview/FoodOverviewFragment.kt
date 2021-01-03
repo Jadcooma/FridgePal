@@ -45,8 +45,11 @@ class FoodOverviewFragment : Fragment() {
         }
 
         foodOverviewViewModel.navigateToFoodEdit.observe(viewLifecycleOwner, {
-            this.findNavController().navigate(
-                FoodOverviewFragmentDirections.actionFoodOverviewFragmentToFoodEditFragment(it))
+            it?.let {
+                this.findNavController().navigate(
+                    FoodOverviewFragmentDirections.actionFoodOverviewFragmentToFoodEditFragment(it))
+                foodOverviewViewModel.onFoodEditNavigated()
+            }
         })
 
         foodOverviewViewModel.navigateToFoodDelete.observe(viewLifecycleOwner,{
