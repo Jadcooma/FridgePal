@@ -73,14 +73,19 @@ class MainActivity : AppCompatActivity() {
         )
 
         //region Berkenen van delay voor 1e uitvoering PeriodicWork via gekozen tijdstip
+
+        // stap 1 : Period vanuit ingesteld tijdstip "HH:mm",
+        // (tijdstip opgehaald met behorende key uit SharedPreferences)
         val periodAlarm : Period = getPeriodFromString(
             preferences.getString("alarm_time", "")!!
         )
 
+        // stap 2 : DateTime aanmaken vanuit uren/minuten Period en vanuit DateTime.now
         val timeAlarm = DateTime.now() .withTimeAtStartOfDay()
             .plusHours(periodAlarm.hours)
             .plusMinutes(periodAlarm.minutes)
 
+        // stap 3 : DateTime gebruiken om aantal minuten benodigde vertraging te berekenen
         val minutesDelayAlarm : Long = getMinutesDelayAlarm(timeAlarm)
         //endregion
 
@@ -97,6 +102,7 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
+    // nodig bij stap 1
     private fun getPeriodFromString(stringDuration: String): Period {
         val formatter = PeriodFormatterBuilder()
             .appendHours()
@@ -106,6 +112,7 @@ class MainActivity : AppCompatActivity() {
         return formatter.parsePeriod(stringDuration)
     }
 
+    // nodig bij stap 2
     private fun getMinutesDelayAlarm(timeAlarm : DateTime): Long {
         val delay : Duration
         if (DateTime.now() < timeAlarm) {

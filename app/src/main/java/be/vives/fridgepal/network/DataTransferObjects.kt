@@ -8,13 +8,12 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class SearchResponse (
-
     @Json(name = "hits") val searchHits : List<SearchHit>
 )
 
 @JsonClass(generateAdapter = true)
 data class SearchHit (
-    @Json(name="recipe") val networkRecipe : NetworkRecipe,
+    @Json(name="recipe") val networkRecipe : NetworkRecipe
 )
 
 @JsonClass(generateAdapter = true)
