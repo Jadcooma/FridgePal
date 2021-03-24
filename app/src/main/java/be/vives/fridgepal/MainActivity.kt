@@ -10,6 +10,9 @@ import be.vives.fridgepal.database.AppDatabase
 import be.vives.fridgepal.food_overview.FoodOverviewViewModel
 import be.vives.fridgepal.food_overview.FoodOverviewViewModelFactory
 import be.vives.fridgepal.work.NotificationWorker
+import be.vives.fridgepal.work.NotificationWorker.Companion.KEY_NUM_CAUTION
+import be.vives.fridgepal.work.NotificationWorker.Companion.KEY_NUM_EXPIRED
+import be.vives.fridgepal.work.NotificationWorker.Companion.KEY_NUM_NEAREXPIRED
 import org.joda.time.DateTime
 import org.joda.time.Duration
 import org.joda.time.Period
@@ -67,9 +70,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun setupNotificationWork(){
         val dataNumWarnings : Data = workDataOf(
-            "KEY_NUM_EXPIRED" to numFoodExpired,
-            "KEY_NUM_NEAREXPIRED" to numFoodNearlyExpired,
-            "KEY_NUM_CAUTION" to numFoodCautionRequired
+            KEY_NUM_EXPIRED to numFoodExpired,
+            KEY_NUM_NEAREXPIRED to numFoodNearlyExpired,
+            KEY_NUM_CAUTION to numFoodCautionRequired
         )
 
         //region Berkenen van delay voor 1e uitvoering PeriodicWork via gekozen tijdstip

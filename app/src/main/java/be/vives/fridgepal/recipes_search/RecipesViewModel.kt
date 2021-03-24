@@ -30,7 +30,6 @@ class RecipesViewModel(application: Application) : AndroidViewModel(application)
     fun getRecipeSearchResults(searchTerm: String){
         coroutineScope.launch {
             try{
-                //TODO want deleteRecipes() is workaround wegens geen vervanging bij nieuwe search
                 recipesRepository.deleteRecipes()
                 recipesRepository.refreshRecipes(searchTerm)
             } catch (e: Exception){
