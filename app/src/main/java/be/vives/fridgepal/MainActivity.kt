@@ -42,7 +42,6 @@ class MainActivity : AppCompatActivity() {
         viewmodel = ViewModelProvider(this, viewModelFactory)
             .get(FoodOverviewViewModel::class.java)
 
-        // TODO Bug: numFood's worden niet geobserveerd => waarde blijft -1
         viewmodel.numFoodExpired.observe(this, { this.numFoodExpired = it })
         viewmodel.numFoodNearlyExpired.observe(this, { this.numFoodNearlyExpired = it })
         viewmodel.numFoodCautionRequired.observe(this, { this.numFoodCautionRequired = it })
